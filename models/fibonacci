@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define mod 1000000007
+
+ll pw(ll a, ll n){
+    
+    if(n == 0)
+    return 1;
+    if(n == 1)
+    return a;
+    
+    ll r = pw(a, n/2);
+    if(n%2 == 0)
+    return ((r)*(r));
+    return ((r)*(r)*(a));
+    
+}
+
+ll fib(ll n) {
+  double phi = (1 + sqrt(5)) / 2;
+  return round(pow(phi, n) / sqrt(5));
+}
+
+
+int main(int argc, char const *argv[]) {
+
+  int t;
+  std::cin >> t;
+
+  while (t--) {
+
+    int n;
+    std::cin >> n;
+    ll temp[n];
+    for (size_t i = 0; i < n; i++) {
+      std::cin >> temp[i];
+    }
+    ll count = 0;
+
+    for (size_t i = 0; i < n; i++) {
+      for (size_t j = 0; j < n; j++) {
+
+        if((2*temp[i] - temp[j]) > 0)
+        count = (count + fib((2*temp[i] - temp[j])%mod)%mod)%mod;
+      }
+    }
+    
+    for (size_t i = 0; i < n; i++) {
+      for (size_t j = i+1; j < n; j++) {
+        for (size_t k = 0; k < n; k++) {
+          count = (count + 2*(fib((temp[i] + temp[j] - temp[k])%mod))%mod)%mod;
+        }
+      }
+    }
+    std::cout << count << '\n';
+  }
+  return 0;
+}
+
+
+python--
+
+import math
+m=10**9+7
+t=int(input())
+for tc in range(t):
+    n=int(input())
+    a=[int(i) for i in input().split()]
+    el=max(a)
+    ans=0
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                x=a[i]+a[j]-a[k]
+                fibo = int((pow((1 + math.sqrt(5)), x) -pow((1 - math.sqrt(5)), x)) / (pow(2, x) * math.sqrt(5))) 
+                ans=(ans+fibo)%m
+    print(ans)
